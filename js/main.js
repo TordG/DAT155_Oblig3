@@ -1,6 +1,19 @@
 
 import MouseLookController from './MouseLookController.js';
-import { Renderer, Scene, Node, Mesh, Primitive, BasicMaterial, CubeMapMaterial, PerspectiveCamera, vec3 } from '../lib/engine/index.js';
+import {
+    Renderer,
+    Scene,
+    Node,
+    Mesh,
+    Primitive,
+    BasicMaterial,
+    PhongMaterial,
+    CubeMapMaterial,
+    PerspectiveCamera,
+    vec3,
+    glMatrix,
+    Light
+} from '../lib/engine/index.js';
 
 // Create a Renderer and append the canvas element to the DOM.
 let renderer = new Renderer(window.innerWidth, window.innerHeight);
@@ -16,23 +29,26 @@ const sunMaterial = new BasicMaterial({
     map: renderer.loadTexture('resources/sun.jpg')
 });
 
-const earthMaterial = new BasicMaterial({
-    map: renderer.loadTexture('resources/earth_daymap.jpg')
+const earthMaterial = new PhongMaterial({
+    map: renderer.loadTexture('resources/earth_daymap.jpg'),
+    specularMap: renderer.loadTexture('resources/earthSpecMap.jpg')
 });
 
-const moonMaterial = new BasicMaterial({
+const moonMaterial = new PhongMaterial({
     map: renderer.loadTexture('resources/moonmap.jpg')
 });
 
 
-const marsMaterial = new BasicMaterial({
+const marsMaterial = new PhongMaterial({
     map: renderer.loadTexture('resources/marsmap.jpg')
 });
 
 
-const mercuryMaterial = new BasicMaterial({
+const mercuryMaterial = new PhongMaterial({
     map: renderer.loadTexture('resources/mercurymap.jpg')
-});const saturnMaterial = new BasicMaterial({
+});
+
+const saturnMaterial = new PhongMaterial({
     map: renderer.loadTexture('resources/saturn.jpg')
 });
 
@@ -62,7 +78,6 @@ scene.add(sun);
 // Using this function ensures that we're reusing the same buffers for geometry, while allowing us to specify a different material.
 const earthPrimitive = Primitive.from(sunPrimitive, earthMaterial);
 
-
 const moonPrimitive = Primitive.from(sunPrimitive, moonMaterial);
 
 const marsPrimitive = Primitive.from(sunPrimitive, marsMaterial);
@@ -73,6 +88,9 @@ const saturnPrimitive = Primitive.from(sunPrimitive, saturnMaterial);
 // Next we create a Node that represents the Earths orbit.
 // This node is not translated at all, because we want it to be centered inside the sun.
 // It is however rotated in the update-loop at starting at line 215.
+const lightNode = new Light();
+scene.add(lightNode)
+
 const earthOrbitNode = new Node(scene);
 
 
