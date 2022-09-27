@@ -19,7 +19,7 @@ import {
 let renderer = new Renderer(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-let time = 0.001;
+let time = 0.0001;
 
 // A scenegraph consists of a top-level Node, called Scene and an arbitrary number of nodes forming a DAG.
 const scene = new Scene();
