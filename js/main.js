@@ -40,7 +40,7 @@ const moonMaterial = new PhongMaterial({
 
 
 const marsMaterial = new PhongMaterial({
-    map: renderer.loadTexture('resources/marsmap.jpg')
+    map: renderer.loadTexture('resources/marsmap.jpeg')
 });
 
 
